@@ -1,3 +1,4 @@
+install.packages("effects")
 ## Regression with binary outcomes
 ## ═════════════════════════════════
 
@@ -42,6 +43,7 @@ NH11$hypev <- factor(NH11$hypev, levels=c("2 No", "1 Yes"))
 # run our regression model
 hyp.out <- glm(hypev~age_p+sex+sleep+bmi,
               data=NH11, family="binomial")
+summary(hyp.out)
 coef(summary(hyp.out))
 
 ## Logistic regression coefficients
@@ -106,3 +108,28 @@ plot(allEffects(hyp.out))
 ##   Note that the data is not perfectly clean and ready to be modeled. You
 ##   will need to clean up at least some of the variables before fitting
 ##   the model.
+
+
+evr2 <-  subset(NH11,select=c("everwrk","age_p","r_maritl"))
+summary(evr2)
+
+temp1 <- factor(evr2$everwrk,levels =c("1 Yes","2 No"))
+summary(temp1)
+
+evr2$everwrk <-  temp1 
+summary(evr2)
+levels(evr2$r_maritl)
+#levels(evr2$r_maritl) <-  droplevels(evr2$r_maritl)
+#levels(evr2$r_maritl)
+evr2$r_maritl <- droplevels(evr2$r_maritl)
+levels(evr2$r_maritl)
+
+mod.wrk.age.marital <- glm(everwrk ~ age_p + r_maritl , family = binomial, data = evr2 )
+summary(mod.wrk.age.marital)
+
+library(effects)
+data.frame(Effect("r_maritl", mod.wrk.age.marital))
+plot(allEffects(mod.wrk.age.marital))
+
+
+
