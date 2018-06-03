@@ -1,7 +1,7 @@
 install.packages("effects")
 ## Regression with binary outcomes
 ## ═════════════════════════════════
-
+## reference http://tutorials.iq.harvard.edu/R/Rstatistics/Rstatistics.html
 ## Logistic regression
 ## ───────────────────────
 
